@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSecurity Files - Home</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #33ff33;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #262626;
+            padding: 20px;
+            text-align: center;
+            font-size: 32px;
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        header img {
+            width: 50px;
+            height: 50px;
+        }
+
+        /* Navbar Styling */
+        nav {
+            background-color: #333;
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #007B33;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 960px;
+            margin: 40px auto;
+            background-color: #2a2a2a;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            color: #ffffff;
+        }
+
+        .menu {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .menu li {
+            margin: 18px 0;
+            font-size: 18px;
+        }
+
+        .menu li a {
+            color: #33ff33;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .menu li a:hover {
+            color: #00592f;
+        }
+
+        footer {
+            text-align: center;
+            padding: 18px;
+            background-color: #333;
+            color: #bbb;
+            font-size: 14px;
+        }
+
+        h2 {
+            color: #33ff33;
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .centered-text {
+            text-align: center;
+            font-size: 24px;
+            color: #33ff33;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                font-size: 26px;
+            }
+
+            .container {
+                padding: 25px;
+                margin: 20px;
+            }
+
+            .menu li {
+                font-size: 16px;
+            }
+
+            footer {
+                font-size: 12px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="Logo.jpg" alt="XSecurity Logo">
+        <h1>XSecurity Files</h1>
+    </header>
+
+    <!-- Navbar for navigation -->
+    <nav>
+        <a href="Create.html">Create</a>
+        <a href="Dashboard.html">Dashboard</a>
+        <a href="Login.html">Login</a>
+    </nav>
+
+    <p class="centered-text">Informations</p>
+
+    <div class="container">
+        <h2>What do we do?</h2>
+        <p>This website was developed to allow you to store your confidential information securely and in an encrypted format.</p>
+        <p>Here are some of the main features:</p>
+
+        <ul class="menu">
+            <li><a href="#">Data Encryption</a> - All data you input into the editor is encrypted, ensuring that no one else can access it.</li>
+            <li><a href="#">Secure Storage</a> - Your data is stored in the cloud with maximum security and can only be accessed by you.</li>
+            <li><a href="#">Guaranteed Privacy</a> - Your anonymity and privacy are our priority. We do not store your personal information without your consent.</li>
+        </ul>
+
+        <h2>How Does It Work?</h2>
+        <p>1. You input your confidential data into the editor.</p>
+        <p>2. The system automatically encrypts the information before sending it to secure storage.</p>
+        <p>3. Your data remains protected, and you can access it securely whenever needed.</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 XSecurity Files. All rights reserved.</p>
+    </footer>
+</body>
+</html>

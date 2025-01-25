@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSecurity Files - Dashboard</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #33ff33;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #262626;
+            padding: 20px;
+            text-align: center;
+            font-size: 32px;
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        header img {
+            width: 50px;
+            height: 50px;
+        }
+
+        /* Navbar Styling */
+        nav {
+            background-color: #333;
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #007B33;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 960px;
+            margin: 40px auto;
+            background-color: #2a2a2a;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #33ff33;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .article-card {
+            background-color: #333;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-card h3 {
+            font-size: 24px;
+            color: #33ff33;
+        }
+
+        .article-card p {
+            font-size: 16px;
+            color: #bbb;
+        }
+
+        footer {
+            text-align: center;
+            padding: 18px;
+            background-color: #333;
+            color: #bbb;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                font-size: 26px;
+            }
+
+            .container {
+                padding: 25px;
+                margin: 20px;
+            }
+
+            .article-card h3 {
+                font-size: 22px;
+            }
+
+            footer {
+                font-size: 12px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="Logo.jpg" alt="XSecurity Logo">
+        <h1>Dashboard</h1>
+    </header>
+
+    <!-- Navbar for navigation -->
+    <nav>
+        <a href="Home.html">Home</a>
+        <a href="Create.html">Create</a>
+        <a href="Login.html">Login</a>
+    </nav>
+
+    <div class="container">
+        <h2>Your Articles:</h2>
+        <div id="articles-list">
+            <!-- Articles will be displayed here dynamically -->
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 XSecurity Files. All rights reserved.</p>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"></script>
+
+    <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Reference to the 'articles' collection
+        const articlesRef = db.collection("articles");
+
+        // Fetch and display articles
+        function loadArticles() {
+            articlesRef.get().then((querySnapshot) => {
+                const articlesList = document.getElementById("articles-list");
+
+                querySnapshot.forEach((doc) => {
+                    const article = doc.data();
+                    const articleCard = document.createElement("div");
+                    articleCard.classList.add("article-card");
+                    articleCard.innerHTML = `
+                        <h3>${article.title}</h3>
+                        <p>${article.content}</p>
+                    `;
+                    articlesList.appendChild(articleCard);
+                });
+            }).catch((error) => {
+                console.error("Error getting documents: ", error);
+            });
+        }
+
+        // Load articles when page loads
+        window.onload = loadArticles;
+    </script>
+</body>
+</html>

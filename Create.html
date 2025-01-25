@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSecurity Files - Create</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #33ff33;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #262626;
+            padding: 20px;
+            text-align: center;
+            font-size: 32px;
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        header img {
+            width: 50px;
+            height: 50px;
+        }
+
+        nav {
+            background-color: #333;
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #007B33;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 960px;
+            margin: 40px auto;
+            background-color: #2a2a2a;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #33ff33;
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        textarea {
+            width: 100%;
+            height: 300px;
+            background-color: #333;
+            color: #ffffff;
+            border: 1px solid #33ff33;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 18px;
+            font-family: 'Courier New', Courier, monospace;
+            resize: none;
+        }
+
+        textarea:focus {
+            background-color: #333;
+            color: #ffffff;
+            border: 1px solid #33ff33;
+        }
+
+        button {
+            background-color: #33ff33;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #00ff00;
+        }
+
+        .message {
+            color: #ff0000;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        input[type="file"] {
+            color: #33ff33;
+            background-color: #333;
+            border: 1px solid #33ff33;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        footer {
+            text-align: center;
+            padding: 18px;
+            background-color: #333;
+            color: #bbb;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                font-size: 26px;
+            }
+
+            .container {
+                padding: 25px;
+                margin: 20px;
+            }
+
+            footer {
+                font-size: 12px;
+            }
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js"></script>
+</head>
+<body>
+    <header>
+        <img src="Logo.jpg" alt="XSecurity Logo">
+        <h1>Create an Archive</h1>
+    </header>
+
+    <nav>
+        <a href="Home.html">Home</a>
+        <a href="Dashboard.html">Dashboard</a>
+        <a href="Login.html">Login</a>
+    </nav>
+
+    <div class="container">
+        <h2>Create Article</h2>
+        <textarea id="textArea" placeholder="Write your information here..."></textarea>
+        <input type="file" id="fileInput" multiple>
+        <button onclick="saveData()">Save</button>
+        <div id="message" class="message"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 XSecurity Files. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_BUCKET.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const storage = firebase.storage();
+        const database = firebase.database();
+
+        function saveData() {
+            const text = document.getElementById('textArea').value;
+            const files = document.getElementById('fileInput').files;
+            const userId = "user123";
+
+            const dataRef = database.ref('confidentialData/' + userId);
+            dataRef.set({
+                textData: text
+            }).then(() => {
+                document.getElementById('message').textContent = 'Text successfully saved to the cloud!';
+                document.getElementById('message').style.color = '#33ff33';
+
+                if (files.length > 0) {
+                    Array.from(files).forEach(file => {
+                        const fileRef = storage.ref().child('documents/' + file.name);
+                        fileRef.put(file).then((snapshot) => {
+                            console.log('File successfully uploaded: ', snapshot);
+                            document.getElementById('message').textContent = 'Files successfully uploaded!';
+                            document.getElementById('message').style.color = '#33ff33';
+                        }).catch((error) => {
+                            console.error('Error uploading file:', error);
+                            document.getElementById('message').textContent = 'Error uploading files.';
+                            document.getElementById('message').style.color = '#ff0000';
+                        });
+                    });
+                }
+            }).catch((error) => {
+                document.getElementById('message').textContent = 'Error saving data.';
+                document.getElementById('message').style.color = '#ff0000';
+                console.error(error);
+            });
+        }
+    </script>
+</body>
+</html>
